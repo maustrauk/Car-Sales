@@ -19,11 +19,38 @@ export const initState = {
     switch (action.type) {
       case "ADD_FEATURE":
         console.log("add feature");
-        const filterFeatures = state.car.features.filter(feature => feature.id !== action.payload.id);
-        const newFeatures = filterFeatures.concat([action.payload]);
-        return {...state,
-        car: {...state.car, features: newFeatures}}
+        const newFeatures = filterFunc(state.car.features, action.payload);
+        return  {
+          ...state,
+          car: {
+            ...state.car,
+            features: newFeatures
+          }};
+
+      case "ADD_FEATURE_PRICE":
+        let newPrice = 0;
+        state.car.features.forEach(feature => {
+          newPrice = newPrice + feature.price;
+        });
+        console.log("add feature price = ", newPrice);
+
+        return {
+          ...state,
+          additionalPrice: newPrice
+        };
       default:
         return state;
     }
   };
+
+
+const filterFunc = (oldState, addToState) => {
+  if (!oldState.length) {
+    return [addToState];
+  } else {
+    const filteredArray = oldState.filter(feature => feature.id !== addToState.id);
+    return filteredArray.concat(addToState);
+
+  }
+}
+

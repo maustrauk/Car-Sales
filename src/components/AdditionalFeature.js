@@ -4,6 +4,7 @@ const AdditionalFeature = props => {
 
   const onClick = () => {
     props.addFeature(props.feature);
+    props.addFeaturePrice();
   }
 
   return (
