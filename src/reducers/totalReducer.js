@@ -17,6 +17,12 @@ export const initState = {
 
   export const totalReducer = (state = initState, action) => {
     switch (action.type) {
+      case "ADD_FEATURE":
+        console.log("add feature");
+        const filterFeatures = state.car.features.filter(feature => feature.id !== action.payload.id);
+        const newFeatures = filterFeatures.concat([action.payload]);
+        return {...state,
+        car: {...state.car, features: newFeatures}}
       default:
         return state;
     }
