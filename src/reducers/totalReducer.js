@@ -1,3 +1,5 @@
+import {ADD_FEATURE, ADD_FEATURE_PRICE, REMOVE_FEATURE} from './../actions/totalActions'
+
 export const initState = {
     additionalPrice: 0,
     car: {
@@ -17,7 +19,7 @@ export const initState = {
 
   export const totalReducer = (state = initState, action) => {
     switch (action.type) {
-      case "ADD_FEATURE":
+      case ADD_FEATURE:
         console.log("add feature");
         const newFeatures = filterFunc(state.car.features, action.payload);
         return  {
@@ -27,17 +29,27 @@ export const initState = {
             features: newFeatures
           }};
 
-      case "ADD_FEATURE_PRICE":
+      case ADD_FEATURE_PRICE:
         let newPrice = 0;
         state.car.features.forEach(feature => {
           newPrice = newPrice + feature.price;
         });
         console.log("add feature price = ", newPrice);
-
         return {
           ...state,
           additionalPrice: newPrice
         };
+
+      case REMOVE_FEATURE:
+        console.log("removed");
+        const featuresAfterRemoved = state.car.features.filter(feature => feature.id !== action.payload);
+        return {
+          ...state,
+          car: {
+            ...state.car,
+            features: featuresAfterRemoved
+          }};
+
       default:
         return state;
     }
