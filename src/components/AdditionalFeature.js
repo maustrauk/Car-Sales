@@ -1,10 +1,16 @@
 import React from 'react';
 
 const AdditionalFeature = props => {
+
+  const onClick = () => {
+    props.addFeature(props.feature);
+    props.addFeaturePrice();
+  }
+
   return (
     <li>
       {/* Add an onClick that will let you add a feature to your car */}
-      <button className="button">Add</button>
+      <button className="button" onClick={onClick}>Add</button>
       {props.feature.name} (+{props.feature.price})
     </li>
   );
